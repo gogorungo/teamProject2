@@ -16,10 +16,21 @@ public class gameClientReadMsg extends Thread {
 		while (true) {
 			try {
 				String serverMsg = br.readLine();
-				System.out.println(serverMsg);
-
+				if("next".equals(serverMsg)) {
+					// 넥스트 받으면 다음 문제로 넘어감
+				}				
+				else {
+					serverMsg = serverMsg.substring(0, serverMsg.length()-1); // 임의로 넣은 " " 제거
+					System.out.println(serverMsg);
+				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				if(br != null)
+					try {
+						br.close();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 			}
 		}
 

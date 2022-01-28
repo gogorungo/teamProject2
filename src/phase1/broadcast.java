@@ -15,13 +15,19 @@ public class broadcast {
 			gameUser gameuser = user.get(key);
 			BufferedWriter bw = gameuser.getBw();
 			try {
-				bw.write(msg+"\n");
+				bw.write(msg);
 				bw.flush();
 			} catch (IOException e) {
-				e.printStackTrace();
+				if(bw != null)
+					try {
+						bw.close();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 			}	
 		}
 		//서버도 메세지 확인
-		System.out.println(msg);
+		System.out.print(msg);
 	}	
 }

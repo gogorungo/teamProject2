@@ -18,6 +18,7 @@ public class gameServer extends Thread {
 	private BufferedReader br;
 	private BufferedWriter bw;
 	private Scanner scan;
+	public static int readyCount;
 	
 	public gameServer() {
 		// 포트 준비하고 대기
@@ -36,6 +37,7 @@ public class gameServer extends Thread {
 	// 접속한 유저를 관리하기 위한 쓰레드
 	@Override
 	public void run() {
+		String userId = null;
 		while(true) {
 			try {
 				// 접속한 유저가 있을 시 소켓을 잇고 br과 bw 연결
@@ -46,7 +48,7 @@ public class gameServer extends Thread {
 				scan = new Scanner(System.in);
 
 				// 유저 아이디 입력
-				String userId = br.readLine();
+				userId = br.readLine();
 
 				// 서버의 해시맵으로 전달
 				user.put(userId, new gameUser(socket, br, bw));
@@ -56,8 +58,14 @@ public class gameServer extends Thread {
 				new broadcast("[공지] : " + userId + "님이 입장하셨습니다\n",user);
 				
 				//유저가 입력하는 메세지 받는 곳
-				new inputMsg(userId, br, user).start();;
+				new inputMsg(userId, br, user).start();
+				new gameStart(user.size()).start();
+				
+				
 			} catch (IOException e) {
+				//클라이언트 접속이 끊어질 시 전체 메세지
+				new broadcast("[공지] : "+ userId + "님이 나가셨습니다\n", user);
+				
 				// 소켓 접속이 끊길 시 close()를 해줘서 예외 차단
 				if(socket != null)
 					try {

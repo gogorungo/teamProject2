@@ -42,7 +42,17 @@ public class gameClient extends Thread {
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+			// 소켓 접속이 끊길 시 close()를 해줘서 예외 차단
+			if(socket != null)
+				try {
+					scan.close();
+					br.close();
+					bw.close();
+					socket.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 		}
 	}
 
