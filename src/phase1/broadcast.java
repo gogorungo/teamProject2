@@ -7,7 +7,6 @@ import java.util.Iterator;
 
 public class broadcast {
 	
-	public broadcast() {	}
 	// 모든 유저에게 메세지 발송
 	public broadcast(String msg, HashMap<String, gameUser> user) {
 		Iterator<String> keys = user.keySet().iterator();
