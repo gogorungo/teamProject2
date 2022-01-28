@@ -18,7 +18,10 @@ public class gameClientReadMsg extends Thread {
 				String serverMsg = br.readLine();
 				if("next".equals(serverMsg)) {
 					// 넥스트 받으면 다음 문제로 넘어감
-				}				
+				}
+				else if("start".equals(serverMsg)) {
+					// 게임 스타트
+				}
 				else {
 					serverMsg = serverMsg.substring(0, serverMsg.length()-1); // 임의로 넣은 " " 제거
 					System.out.println(serverMsg);

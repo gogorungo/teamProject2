@@ -59,7 +59,7 @@ public class gameServer extends Thread {
 				
 				//유저가 입력하는 메세지 받는 곳
 				new inputMsg(userId, br, user).start();
-				new gameStart(user.size()).start();
+				new gameStart(user.size(), user).start();
 				
 				
 			} catch (IOException e) {
